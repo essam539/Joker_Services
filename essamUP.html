@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joker Services - خدمات جوكر</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+    :root {
+      --joker-red: #e60e15;
+      --joker-dark-red: #c00c12;
+      --joker-black: #0a0a0a;
+      --joker-dark-black: #000000;
+      --joker-white: #ffffff;
+      --joker-light-gray: #f0f0f0;
+      --joker-dim-gray: #888;
+      --border-color: rgba(230, 14, 21, 0.5);
+      --primary-color: var(--joker-red);
+      --secondary-color: var(--joker-black);
+      --text-color: var(--joker-white);
+      --gold-color: #ffd700;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+      background-color: var(--joker-black);
+      color: var(--joker-white);
+      overflow-x: hidden;
+      line-height: 1.6;
+      direction: rtl;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(230, 14, 21, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(230, 14, 21, 0.1) 0%, transparent 40%),
+        linear-gradient(to bottom, #111, var(--joker-dark-black));
+      background-attachment: fixed;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 0;
+      position: relative;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+      background: transparent;
+    }
+    
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .logo-text {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--text-color);
+      margin-right: 1rem;
+      text-shadow: 0 0 5px var(--primary-color);
+    }
+    
+    .logo-subtext {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .logo-icon {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .target-icon {
+      fill: none;
+      stroke: var(--primary-color);
+      stroke-width: 5;
+    }
+    
+    .target-center {
+      fill: var(--primary-color);
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .services {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      padding: 50px 0px;
+      margin: auto;
+    }
+
+    .service-card {
+      background: var(--joker-dark-black);
+      border: 2px solid var(--joker-red);
+      border-radius: 15px;
+      flex: 1 1 calc(33.333% - 40px);
+      min-width: 300px;
+      max-width: 400px;
+      padding: 25px;
+      box-sizing: border-box;
+      position: relative;
+      transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+      box-shadow: 0 0 15px rgba(230, 14, 21, 0.2);
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(230, 14, 21, 0.4);
+    }
+
+    .service-card.premium {
+      border: 3px solid var(--joker-red);
+      background: linear-gradient(135deg, var(--joker-dark-black) 0%, rgba(230, 14, 21, 0.05) 100%);
+      box-shadow: 0 0 25px rgba(230, 14, 21, 0.4);
+      position: relative;
+    }
+
+    .service-card.premium:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 15px 35px rgba(230, 14, 21, 0.6);
+    }
+
+    .service-card.vip {
+      border: 3px solid var(--gold-color);
+      background: linear-gradient(135deg, var(--joker-dark-black) 0%, rgba(255, 215, 0, 0.05) 100%);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+      position: relative;
+    }
+
+    .service-card.vip:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 15px 35px rgba(255, 215, 0, 0.6);
+    }
+
+    .premium-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: linear-gradient(45deg, var(--joker-red), var(--joker-dark-red));
+      color: var(--joker-white);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(230, 14, 21, 0.5);
+      z-index: 10;
+    }
+
+    .vip-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: linear-gradient(45deg, var(--gold-color), #ffed4e);
+      color: #000;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+      z-index: 10;
+    }
+
+    .new-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: linear-gradient(45deg, #00ff00, #00cc00);
+      color: #000;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(0, 255, 0, 0.5);
+      z-index: 10;
+    }
+
+    .service-icon {
+      color: var(--joker-red);
+      margin-bottom: 15px;
+      text-align: center;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
+
+    .service-icon svg {
+      width: 80px;
+      height: 80px;
+      filter: none;
+    }
+
+    .service-title {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--joker-red);
+      margin: 0 0 15px;
+      text-align: center;
+      padding: 0;
+    }
+
+    .service-description {
+      margin: 15px 0;
+      line-height: 1.7;
+      color: var(--joker-white);
+      font-size: 0.95rem;
+      min-height: 80px;
+      text-align: center;
+      flex-grow: 1;
+      padding: 0;
+    }
+
+    .order-button, .service-button {
+      background: var(--joker-red);
+      color: var(--joker-white);
+      padding: 14px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease-out, transform 0.3s ease-out, box-shadow 0.3s ease-out;
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      border: none;
+      font-family: 'Cairo', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 10px rgba(230, 14, 21, 0.3);
+      cursor: pointer;
+      font-size: 1rem;
+      width: auto;
+      align-self: center;
+    }
+
+    .order-button:hover, .service-button:hover {
+      background: var(--joker-dark-red);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(230, 14, 21, 0.5);
+    }
+    
+    .order-button.disabled, .service-button.disabled {
+      background: #555;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .order-button.disabled:hover, .service-button.disabled:hover {
+      background: #555;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Celebrities Section */
+    .celebrities-section {
+      display: none;
+      padding: 2rem 0;
+    }
+
+    .celebrities-section.active {
+      display: block;
+    }
+
+    .celebrities-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .celebrities-title {
+      font-size: 2.5rem;
+      color: var(--joker-red);
+      font-weight: 900;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .verified-badge {
+      color: #1da1f2;
+      font-size: 2rem;
+    }
+
+    .celebrities-subtitle {
+      font-size: 1.2rem;
+      color: var(--joker-white);
+      margin-bottom: 2rem;
+    }
+
+    .back-button {
+      background: var(--joker-red);
+      color: var(--joker-white);
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: var(--joker-dark-red);
+      transform: translateY(-2px);
+    }
+
+    .celebrities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .category-section {
+      background: var(--joker-dark-black);
+      border: 2px solid var(--joker-red);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .category-title {
+      font-size: 1.8rem;
+      color: var(--joker-red);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--joker-red);
+    }
+
+    .celebrity-item {
+      background: rgba(230, 14, 21, 0.1);
+      border: 1px solid var(--joker-red);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .celebrity-item:hover {
+      background: rgba(230, 14, 21, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(230, 14, 21, 0.3);
+    }
+
+    .celebrity-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--joker-white);
+      margin-bottom: 0.5rem;
+    }
+
+    .celebrity-profession {
+      font-size: 1rem;
+      color: var(--joker-red);
+      margin-bottom: 1rem;
+    }
+
+    .celebrity-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold-color);
+      margin-bottom: 1rem;
+    }
+
+    .celebrity-button {
+      background: var(--joker-red);
+      color: var(--joker-white);
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.9rem;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .celebrity-button:hover {
+      background: var(--joker-dark-red);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--joker-dim-gray);
+      background: transparent;
+    }
+
+    .contact-section {
+      margin-top: 3rem;
+      text-align: center;
+      padding: 3rem 0;
+      background-color: rgba(0,0,0,0.2);
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .contact-title {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .social-icon {
+      width: 55px;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: rgba(230, 14, 21, 0.1);
+      border: 2px solid var(--primary-color);
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      transform: scale(1.15) rotate(5deg);
+      background-color: rgba(230, 14, 21, 0.3);
+      box-shadow: 0 0 15px var(--primary-color);
+    }
+    
+    .social-icon svg {
+      width: 30px;
+      height: 30px;
+      fill: var(--primary-color);
+    }
+    
+    .contact-email {
+      font-size: 1.2rem;
+      color: var(--text-color);
+      margin-top: 1.5rem;
+    }
+
+    .contact-email a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-email a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    @media(max-width: 992px) {
+      .service-card {
+        flex: 1 1 calc(50% - 40px);
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .logo-text {
+        font-size: 2.5rem;
+      }
+      .logo-subtext {
+        font-size: 1.2rem;
+      }
+      .logo-icon {
+        width: 50px;
+        height: 50px;
+      }
+      .service-card {
+        flex: 1 1 100%;
+        min-width: unset;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .services { 
+        padding: 30px 15px; 
+        gap: 20px; 
+      }
+      .contact-title {
+        font-size: 1.8rem;
+      }
+      .social-icons {
+        gap: 1.5rem;
+      }
+      .social-icon {
+        width: 50px;
+        height: 50px;
+      }
+      .premium-badge, .vip-badge, .new-badge {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+      }
+      .celebrities-title {
+        font-size: 2rem;
+      }
+      .celebrities-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-text {
+        font-size: 2rem;
+      }
+      .logo-subtext {
+        font-size: 1rem;
+      }
+      .service-title {
+        font-size: 1.4rem;
+      }
+      .service-description {
+        font-size: 0.9rem;
+        min-height: 60px;
+      }
+      .contact-email {
+        font-size: 1rem;
+      }
+      .order-button, .service-button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+      }
+      .premium-badge, .vip-badge, .new-badge {
+        padding: 5px 10px;
+        font-size: 0.65rem;
+      }
+      .celebrities-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div>
+        <span class="logo-text">JOKER</span>
+        <span class="logo-subtext">SERVICES</span>
+      </div>
+      <svg class="logo-icon" viewBox="0 0 100 100">
+        <circle class="target-icon" cx="50" cy="50" r="45"></circle>
+        <circle class="target-icon" cx="50" cy="50" r="30"></circle>
+        <circle class="target-icon" cx="50" cy="50" r="15"></circle>
+        <circle class="target-center" cx="50" cy="50" r="5"></circle>
+      </svg>
+    </div>
+  </header>
+  
+  <div class="container">
+    <!-- Main Services Section -->
+    <div class="services" id="main-services">
+      <!-- خدمة بيانات الخطوط - VIP SERVICE -->
+      <div class="service-card vip">
+        <div class="vip-badge">VIP</div>
+        <div class="service-icon">
+          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="10" width="60" height="80" rx="5" fill="none" stroke="#ffd700" stroke-width="4"/>
+            <rect x="30" y="25" width="40" height="25" rx="2" fill="#ffd700"/>
+            <text x="50" y="65" font-family="Cairo, sans-serif" font-size="14" font-weight="bold" fill="#ffd700" text-anchor="middle">DATA</text>
+            <rect x="35" y="75" width="5" height="10" fill="#ffd700"/>
+            <rect x="45" y="70" width="5" height="15" fill="#ffd700"/>
+            <rect x="55" y="65" width="5" height="20" fill="#ffd700"/>
+          </svg>
+        </div>
+        <h2 class="service-title">خدمة بيانات الخطوط</h2>
+        <p class="service-description">
+          خدمة استعلام متكاملة تمكنك من معرفة البيانات الكاملة لأي شخص من خلال رقم هاتفه فقط. احصل على الاسم الكامل، العنوان التفصيلي، ورقم البطاقة بسرية تامة وبدقة عالية.
+        </p>
+        <a href="https://wa.me/+201095932649?text=اريد طلب خدمة بيانات الخطوط VIP - استعلام عن البيانات الكاملة من خلال رقم الهاتف" class="order-button" target="_blank">طلب الآن</a>
+      </div>
+      
+      <!-- اشتراك كانفا برو -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M70,30 C65,20 55,15 45,15 C30,15 20,30 20,50 C20,70 30,85 45,85 C55,85 65,80 70,70" fill="none" stroke="#e60e15" stroke-width="6" stroke-linecap="round"/>
+            <text x="50" y="95" font-family="Cairo, sans-serif" font-size="16" font-weight="bold" fill="#e60e15" text-anchor="middle">Pro</text>
+          </svg>
+        </div>
+        <h2 class="service-title">اشتراك كانفا برو</h2>
+        <p class="service-description">
+          احصل على اشتراك كانفا برو بأفضل سعر في السوق. استمتع بجميع مميزات النسخة المدفوعة من كانفا لمدة عام كامل، واطلق العنان لإبداعك مع آلاف القوالب والعناصر الحصرية والمميزات الاحترافية.
+        </p>
+        <a href="https://wa.me/+201095932649?text=اريد طلب خدمة اشتراك كانفا برو" class="order-button" target="_blank">طلب الآن</a>
+      </div>
+      
+      <!-- شراء رقم وهمي - NEW SERVICE -->
+      <div class="service-card">
+        <div class="new-badge">خصم لفترة محدودة</div>
+        <div class="service-icon">
+          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="10" width="40" height="80" rx="5" fill="none" stroke="#e60e15" stroke-width="4"/>
+            <rect x="35" y="20" width="30" height="50" rx="2" fill="none" stroke="#e60e15" stroke-width="2"/>
+            <circle cx="50" cy="80" r="5" fill="#e60e15"/>
+            <path d="M20,50 Q30,40 40,50 Q50,60 60,50 Q70,40 80,50" fill="none" stroke="#e60e15" stroke-width="3" stroke-linecap="round"/>
+            <text x="42" y="40" font-family="Cairo, sans-serif" font-size="8" font-weight="bold" fill="#e60e15">01</text>
+            <text x="52" y="40" font-family="Cairo, sans-serif" font-size="8" font-weight="bold" fill="#e60e15">10</text>
+            <text x="42" y="50" font-family="Cairo, sans-serif" font-size="8" font-weight="bold" fill="#e60e15">10</text>
+            <text x="52" y="50" font-family="Cairo, sans-serif" font-size="8" font-weight="bold" fill="#e60e15">01</text>
+          </svg>
+        </div>
+        <h2 class="service-title">شراء رقم وهمي</h2>
+        <p class="service-description">
+          احصل على رقم وهمي لجميع تطبيقات التواصل بسهولة وأمان. خدمة فورية تمنحك الخصوصية التامة وتحمي بياناتك الشخصية. أرقام متوفرة لجميع الدول والتطبيقات بأسعار تنافسية وضمان الجودة.
+        </p>
+        <a href="https://wa.me/+201095932649?text=اريد طلب خدمة شراء رقم وهمي - للحصول على رقم وهمي لتطبيقات التواصل" class="order-button" target="_blank">طلب الآن</a>
+      </div>
+      
+      <!-- خدمات انستجرام مصرية -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="15" width="70" height="70" rx="15" fill="none" stroke="#e60e15" stroke-width="4"/>
+            <circle cx="50" cy="50" r="20" fill="none" stroke="#e60e15" stroke-width="4"/>
+            <circle cx="70" cy="30" r="5" fill="#e60e15"/>
+            <text x="50" y="90" font-size="16" text-anchor="middle" fill="#e60e15">🇪🇬</text>
+          </svg>
+        </div>
+        <h2 class="service-title">خدمات انستجرام مصرية 100% 🇪🇬</h2>
+        <p class="service-description">
+          احصل على متابعين وإعجابات ومشاهدات ستوري انستجرام حقيقية 100% مصرية. يمكنك تحديد نوع المتابعين (ذكور/إناث/الكل) حسب احتياجك. خدمة فورية بأسعار تنافسية وضمان الجودة. تواصل معنا لمعرفة التفاصيل.
+        </p>
+        <a href="https://wa.me/+201095932649?text=اريد طلب خدمة انستجرام مصرية" class="order-button" target="_blank">طلب الآن</a>
+      </div>
+      
+      <!-- تعليقات فيسبوك موثقة مصرية - PREMIUM SERVICE -->
+      <div class="service-card premium">
+        <div class="premium-badge">مميز</div>
+        <div class="service-icon">
+          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 10 H85 V65 H55 L45 80 V65 H15 Z" fill="none" stroke="#e60e15" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M55 55 V40 H65 L67 30 H55 V23 C55 20 57 18 60 18 H68 V10 H58 C48 10 45 17 45 25 V30 H35 V40 H45 V55 Z" fill="#e60e15"/>
+            <circle cx="75" cy="25" r="8" fill="#1da1f2"/>
+            <path d="M72 25 L74 27 L78 23" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <text x="50" y="90" font-size="16" text-anchor="middle" fill="#e60e15">🇪🇬</text>
+          </svg>
+        </div>
+        <h2 class="service-title">تعليقات فيسبوك موثقة مصرية</h2>
+        <p class="service-description">
+          اجعل مشاهير مصر يعلقون على منشوراتك! خدمة حصرية تتيح لك الحصول على تعليقات من حسابات موثقة ومشهورة مصرية على منشوراتك في فيسبوك. اختر من بين ممثلين، مغنيين، لاعبي كرة القدم، مشايخ، إعلاميين ومشاهير آخرين موثقين.
+        </p>
+        <button class="order-button" onclick="showCelebrities()">شوف المشاهير المتاحين</button>
+      </div>
+      
+      <!-- شحن شدات ببجي -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20,50 C20,30 40,20 50,20 C60,20 80,30 80,50 C80,60 75,70 70,75 L30,75 C25,70 20,60 20,50 Z" fill="none" stroke="#e60e15" stroke-width="4"/>
+            <path d="M30,50 L70,50 C65,60 60,65 50,65 C40,65 35,60 30,50 Z" fill="#e60e15"/>
+            <rect x="35" y="75" width="30" height="15" rx="3" fill="#e60e15"/>
+            <text x="50" y="87" font-family="Cairo, sans-serif" font-size="12" font-weight="bold" fill="#000" text-anchor="middle">UC</text>
+          </svg>
+        </div>
+        <h2 class="service-title">شحن شدات ببجي</h2>
+        <p class="service-description">
+          احصل على شدات ببجي بأسرع وقت وأفضل سعر في السوق. شحن فوري ومضمون 100% لحسابك باستخدام ID اللاعب فقط. استمتع بتجربة لعب متميزة مع أفضل العروض والخصومات الحصرية.
+        </p>
+        <a href="https://wa.me/+201095932649?text=اريد طلب خدمة شحن شدات ببجي" class="order-button" target="_blank">طلب الآن</a>
+      </div>
+      
+      <!-- شحن الماس فري فاير -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,10 L80,40 L50,90 L20,40 Z" fill="none" stroke="#e60e15" stroke-width="4"/>
+            <path d="M50,10 L50,90" stroke="#e60e15" stroke-width="2"/>
+            <path d="M20,40 L80,40" stroke="#e60e15" stroke-width="2"/>
+            <path d="M50,10 L35,40" stroke="#e60e15" stroke-width="2"/>
+            <path d="M50,10 L65,40" stroke="#e60e15" stroke-width="2"/>
+            <path d="M35,40 L50,90 L20,40 Z" fill="#e60e15" fill-opacity="0.7"/>
+            <path d="M65,40 L50,90 L80,40 Z" fill="#e60e15" fill-opacity="0.7"/>
+          </svg>
+        </div>
+        <h2 class="service-title">شحن الماس فري فاير</h2>
+        <p class="service-description">
+          اشحن الماس فري فاير بسهولة وأمان من خلال ID اللاعب فقط. خدمة شحن فورية بأسعار تنافسية تضمن لك الحصول على الماس في أسرع وقت. استمتع بمزايا حصرية وعروض خاصة لعملائنا المميزين.
+        </p>
+        <a href="https://wa.me/+201095932649?text=اريد طلب خدمة شحن الماس فري فاير" class="order-button" target="_blank">طلب الآن</a>
+      </div>
+    </div>
+
+    <!-- Celebrities Section -->
+    <div class="celebrities-section" id="celebrities-section">
+      <div class="celebrities-header">
+        <button class="back-button" onclick="showMainServices()">← العودة للخدمات الرئيسية</button>
+        <h1 class="celebrities-title">
+          المشاهير المتاحين 
+          <span class="verified-badge">✓</span>
+          <svg class="logo-icon" viewBox="0 0 100 100" style="width: 50px; height: 50px;">
+            <circle class="target-icon" cx="50" cy="50" r="45"></circle>
+            <circle class="target-icon" cx="50" cy="50" r="30"></circle>
+            <circle class="target-icon" cx="50" cy="50" r="15"></circle>
+            <circle class="target-center" cx="50" cy="50" r="5"></circle>
+          </svg>
+        </h1>
+        <p class="celebrities-subtitle">اختر المشهور المطلوب وسيتم توجيهك لطلب الخدمة عبر الواتساب</p>
+      </div>
+
+      <!-- الممثلين -->
+      <div class="category-section">
+        <h2 class="category-title">🎭 الممثلين</h2>
+        <div class="celebrities-grid">
+          <div class="celebrity-item" onclick="orderCelebrity('إبرام سمير', 'ممثل', '800')">
+            <div class="celebrity-name">إبرام سمير</div>
+            <div class="celebrity-profession">ممثل</div>
+            <div class="celebrity-price">800 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('تامر هجرس', 'ممثل', '400')">
+            <div class="celebrity-name">تامر هجرس</div>
+            <div class="celebrity-profession">ممثل</div>
+            <div class="celebrity-price">400 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('طاهر أبو ليلة', 'ممثل', '600')">
+            <div class="celebrity-name">طاهر أبو ليلة</div>
+            <div class="celebrity-profession">ممثل</div>
+            <div class="celebrity-price">600 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('عبدالرحمن القليوبي', 'ممثل', '600')">
+            <div class="celebrity-name">عبدالرحمن القليوبي</div>
+            <div class="celebrity-profession">ممثل</div>
+            <div class="celebrity-price">600 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('محمد عز', 'ممثل', '650')">
+            <div class="celebrity-name">محمد عز</div>
+            <div class="celebrity-profession">ممثل</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('حوريه فرغلي', 'ممثلة', '650')">
+            <div class="celebrity-name">حوريه فرغلي</div>
+            <div class="celebrity-profession">ممثلة</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('هايدي رفعت', 'ممثلة', '650')">
+            <div class="celebrity-name">هايدي رفعت</div>
+            <div class="celebrity-profession">ممثلة</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- لاعبي كرة القدم -->
+      <div class="category-section">
+        <h2 class="category-title">⚽ لاعبي كرة القدم</h2>
+        <div class="celebrities-grid">
+          <div class="celebrity-item" onclick="orderCelebrity('محمود كهربا', 'لاعب كورة', '700')">
+            <div class="celebrity-name">محمود كهربا</div>
+            <div class="celebrity-profession">لاعب كورة</div>
+            <div class="celebrity-price">700 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('كريب الدبيس', 'لاعب كورة', '700')">
+            <div class="celebrity-name">كريب الدبيس</div>
+            <div class="celebrity-profession">لاعب كورة</div>
+            <div class="celebrity-price">700 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('جونيور اجاي', 'لاعب كورة', '700')">
+            <div class="celebrity-name">جونيور اجاي</div>
+            <div class="celebrity-profession">لاعب كورة</div>
+            <div class="celebrity-price">700 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('مصطفي مخلوف', 'لاعب كورة', '700')">
+            <div class="celebrity-name">مصطفي مخلوف</div>
+            <div class="celebrity-profession">لاعب كورة</div>
+            <div class="celebrity-price">700 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('محمد شريف', 'لاعب كورة', '700')">
+            <div class="celebrity-name">محمد شريف</div>
+            <div class="celebrity-profession">لاعب كورة</div>
+            <div class="celebrity-price">700 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('صالح جمعة', 'لاعب كورة', '650')">
+            <div class="celebrity-name">صالح جمعة</div>
+            <div class="celebrity-profession">لاعب كورة</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- المغنيين والفنانين -->
+      <div class="category-section">
+        <h2 class="category-title">🎵 المغنيين والفنانين</h2>
+        <div class="celebrities-grid">
+          <div class="celebrity-item" onclick="orderCelebrity('هبة يوسف', 'مغنية', '650')">
+            <div class="celebrity-name">هبة يوسف</div>
+            <div class="celebrity-profession">مغنية</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('أشرقت', 'مغنية', '600')">
+            <div class="celebrity-name">أشرقت</div>
+            <div class="celebrity-profession">مغنية</div>
+            <div class="celebrity-price">600 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('رحاب سليم', 'مغنية', '600')">
+            <div class="celebrity-name">رحاب سليم</div>
+            <div class="celebrity-profession">مغنية</div>
+            <div class="celebrity-price">600 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('ياسمينا العلواني', 'مغنية', '600')">
+            <div class="celebrity-name">ياسمينا العلواني</div>
+            <div class="celebrity-profession">مغنية</div>
+            <div class="celebrity-price">600 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('ساندرا يوسف', 'مغنية', '600')">
+            <div class="celebrity-name">ساندرا يوسف</div>
+            <div class="celebrity-profession">مغنية</div>
+            <div class="celebrity-price">600 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('محمد أسامة', 'مغني', '650')">
+            <div class="celebrity-name">محمد أسامة</div>
+            <div class="celebrity-profession">مغني</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('وائل الغمراوي', 'مغني', '550')">
+            <div class="celebrity-name">وائل الغمراوي</div>
+            <div class="celebrity-profession">مغني</div>
+            <div class="celebrity-price">550 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('امير قاسم', 'مغني', '550')">
+            <div class="celebrity-name">امير قاسم</div>
+            <div class="celebrity-profession">مغني</div>
+            <div class="celebrity-price">550 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('احمد حسام', 'فنان', '650')">
+            <div class="celebrity-name">احمد حسام</div>
+            <div class="celebrity-profession">فنان</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('أيوب القاضي', 'فنان', '550')">
+            <div class="celebrity-name">أيوب القاضي</div>
+            <div class="celebrity-profession">فنان</div>
+            <div class="celebrity-price">550 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('محمد صبري', 'فنان', '400')">
+            <div class="celebrity-name">محمد صبري</div>
+            <div class="celebrity-profession">فنان</div>
+            <div class="celebrity-price">400 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('طارق زيدان', 'فنان', '400')">
+            <div class="celebrity-name">طارق زيدان</div>
+            <div class="celebrity-profession">فنان</div>
+            <div class="celebrity-price">400 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- الشيوخ والإعلاميين والبلوجرز -->
+      <div class="category-section">
+        <h2 class="category-title">📺 الشيوخ والإعلاميين والبلوجرز</h2>
+        <div class="celebrities-grid">
+          <div class="celebrity-item" onclick="orderCelebrity('الشيخ محمد الصاوي', 'شيخ', '650')">
+            <div class="celebrity-name">الشيخ محمد الصاوي</div>
+            <div class="celebrity-profession">شيخ</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('الشيخ محمد العريفي', 'شيخ', '650')">
+            <div class="celebrity-name">الشيخ محمد العريفي</div>
+            <div class="celebrity-profession">شيخ</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('الإعلامي محمد هشام', 'إعلامي', '750')">
+            <div class="celebrity-name">الإعلامي محمد هشام</div>
+            <div class="celebrity-profession">إعلامي</div>
+            <div class="celebrity-price">750 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+          <div class="celebrity-item" onclick="orderCelebrity('البلوجر حليم وأمل', 'بلوجر', '650')">
+            <div class="celebrity-name">البلوجر حليم وأمل</div>
+            <div class="celebrity-profession">بلوجر</div>
+            <div class="celebrity-price">650 جنيه</div>
+            <a href="#" class="celebrity-button">طلب الآن</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="contact-section">
+      <h2 class="contact-title">تواصل</h2>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/16Qq7PzYik/?mibextid=qi2Omg" class="social-icon" target="_blank">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"></path>
+          </svg>
+        </a>
+        <a href="https://t.me/JokerServices11" class="social-icon" target="_blank">
+          <svg viewBox="0 0 24 24">
+            <path d="M9.78,18.65L10.06,14.42L17.74,7.5C18.08,7.19 17.67,7.04 17.22,7.31L7.74,13.3L3.64,12.16C2.76,11.91 2.75,11.23 3.84,10.75L19.81,4.54C20.54,4.21 21.24,4.72 20.96,5.84L18.24,18.65C18.05,19.56 17.5,19.78 16.74,19.36L12.6,16.3L10.61,18.23C10.38,18.46 10.19,18.65 9.78,18.65Z"></path>
+          </svg>
+        </a>
+        <a href="https://wa.me/+201095932649" class="social-icon" target="_blank">
+          <svg viewBox="0 0 24 24">
+            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7 8.5 7 9.71C7 10.93 7.89 12.1 8 12.27C8.14 12.44 9.76 14.94 12.25 16C12.84 16.27 13.3 16.42 13.66 16.53C14.25 16.72 14.79 16.69 15.22 16.63C15.7 16.56 16.68 16.03 16.89 15.45C17.1 14.87 17.1 14.38 17.04 14.27C16.97 14.17 16.81 14.11 16.56 14C16.31 13.86 15.09 13.26 14.87 13.18C14.64 13.1 14.5 13.06 14.31 13.3C14.15 13.55 13.67 14.11 13.53 14.27C13.38 14.44 13.24 14.46 13 14.34C12.74 14.21 11.94 13.95 11 13.11C10.26 12.45 9.77 11.64 9.62 11.39C9.5 11.15 9.61 11 9.73 10.89C9.84 10.78 10 10.6 10.1 10.45C10.23 10.31 10.27 10.2 10.35 10.04C10.43 9.87 10.39 9.73 10.33 9.61C10.27 9.5 9.77 8.26 9.56 7.77C9.36 7.29 9.16 7.35 9 7.34C8.86 7.34 8.7 7.33 8.53 7.33Z"></path>
+          </svg>
+        </a>
+      </div>
+      <div class="contact-email">
+        Email: <a href="/cdn-cgi/l/email-protection#0960676f66496366626c7b7a6c7b7f606a6c7a276a6664"><span class="__cf_email__" data-cfemail="0c65626a634c666367697e7f697e7a656f697f226f6361">[email&#160;protected]</span></a>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <p>جميع الحقوق محفوظة © 2025 Joker Services</p>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    function showCelebrities() {
+      document.getElementById('main-services').style.display = 'none';
+      document.getElementById('celebrities-section').classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function showMainServices() {
+      document.getElementById('main-services').style.display = 'flex';
+      document.getElementById('celebrities-section').classList.remove('active');
+      window.scrollTo(0, 0);
+    }
+
+    function orderCelebrity(name, profession, price) {
+      const message = `مرحباً، أريد طلب خدمة تعليق فيسبوك موثق
+المشهور: ${name}
+المهنة: ${profession}
+السعر: ${price} جنيه
+أرجو التواصل لتأكيد الطلب`;
+      
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/+201095932649?text=${encodedMessage}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+</body>
+</html>
